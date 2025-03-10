@@ -102,15 +102,21 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/ventasAdmin', [VentaAdminController::class, 'index'])->name('admin.ventas.index');
 });
 
-Route::middleware(['auth', 'role:user'])->group(function () {
-    // Rutas para Clientes
+Route::middleware(['auth'])->group(function () {
+    // Ruta home para usuarios normales
     Route::get('/home', function () {
         $totalClientes = \App\Models\Cliente::count();
         $totalVehiculos = \App\Models\Vehiculo::count();
         $totalVentas = \App\Models\Venta::count();
 
         return view('index', compact('totalClientes', 'totalVehiculos', 'totalVentas'));
-    })->name('home'); // Define un nombre para la ruta
+    })->name('user.home');
+
+    // ...resto de rutas protegidas
+});
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // Rutas para Clientes
+
     Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
     Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
     Route::post('/ventas', [VentaController::class, 'store'])->name('ventas.store');
@@ -137,7 +143,5 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 // Ruta de logout (debe estar fuera del middleware auth)
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/');
+    return redirect('/home');
 })->name('logout');
-
-

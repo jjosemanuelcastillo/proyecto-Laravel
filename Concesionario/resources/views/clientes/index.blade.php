@@ -54,7 +54,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <a href="{{ route('home') }}" class="btn btn-success shadow-sm">Volver</a>
+            <a href="{{ route('inicio') }}" class="btn btn-success shadow-sm">Volver</a>
         </div>
     </div>
 
