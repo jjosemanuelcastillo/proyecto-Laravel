@@ -15,10 +15,7 @@
     <div class="container-fluid py-5">
         <div class="text-center mb-4">
             <h1 class="fw-bold text-primary">Lista de Clientes</h1>
-            <p class="text-muted">Gestiona tus clientes de manera eficiente</p>
-            <a href="{{ route('clientes.create') }}" class="btn btn-success shadow-sm">
-                <i class="bi bi-person-plus"></i> Agregar Cliente
-            </a>
+
         </div>
 
         @if (session('success'))
@@ -44,17 +41,18 @@
                         <td>{{ $cliente->email }}</td>
                         <td>{{ $cliente->telefono }}</td>
                         <td>
-                            <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-info btn-sm">
+                            <a href="{{ route('admin.clientes.show', $cliente->id) }}" class="btn btn-info btn-sm">
                                 <i class="bi bi-eye"></i> Ver
                             </a>
-
-                            
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
+                
             </table>
-            <a href="{{ route('home') }}" class="btn btn-success shadow-sm">Volver</a>
+            <a href="{{ route('home') }}" class="btn btn-info btn-sm">
+                    <i class="bi bi-eye"></i> Volver a Menú Principal
+                </a>
         </div>
     </div>
 

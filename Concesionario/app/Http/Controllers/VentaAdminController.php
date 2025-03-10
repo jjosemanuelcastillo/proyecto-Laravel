@@ -7,9 +7,8 @@ use App\Models\Vehiculo;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
-class VentaController extends Controller
+class VentaAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +18,7 @@ class VentaController extends Controller
     public function index()
     {
         $ventas = Venta::all();
-        return view('ventas.index',compact('ventas'));
+        return view('admin.ventas.index',compact('ventas'));
     }
 
     /**
@@ -43,40 +42,22 @@ class VentaController extends Controller
      */
     public function store(Request $request)
 {
-    try {
-        $user = Auth::user();
-        
-        // Verificar si el usuario tiene un cliente asociado
-        if (!$user->cliente) {
-            return back()
-                ->withInput()
-                ->with('error', 'No tienes un cliente asociado a tu cuenta.');
-        }
+    $request->validate([
+        'cliente_id' => 'required|exists:clientes,id',
+        'vehiculo_id' => 'required|exists:vehiculos,id',
+        'fecha' => 'required|date', // Debe coincidir con el name en el formulario
+        'precio' => 'required|numeric|min:0',
+    ]);
 
-        // Validación
-        $request->validate([
-            'vehiculo_id' => 'required|exists:vehiculos,id',
-            'fecha' => 'required|date',
-            'precio' => 'required|numeric|min:0',
-        ]);
+    Venta::create([
+        'cliente_id' => $request->cliente_id,
+        'vehiculo_id' => $request->vehiculo_id,
+        'fecha_venta' => $request->fecha, // Se asigna correctamente el nombre
+        'total' => $request->precio, // 🔹 Agregar el total si es igual al precio
+        'user_id' => Auth::id(), // Aquí se guarda el ID del usuario autenticado
+    ]);
 
-        // Crear la venta
-        $venta = Venta::create([
-            'vehiculo_id' => $request->vehiculo_id,
-            'cliente_id' => $user->cliente->id,
-            'fecha_venta' => $request->fecha,
-            'total' => $request->precio,
-            'user_id' => $user->id
-        ]);
-
-        return redirect()->route('ventas.index')
-            ->with('success', 'Venta registrada exitosamente.');
-    } catch (\Exception $e) {
-        Log::error('Error al crear venta: ' . $e->getMessage());
-        return back()
-            ->withInput()
-            ->with('error', 'Error al registrar la venta: ' . $e->getMessage());
-    }
+    return redirect()->route('ventas.index')->with('success', 'Venta registrada exitosamente.');
 }
 
 

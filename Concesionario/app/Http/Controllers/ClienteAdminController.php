@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class ClienteAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ClienteController extends Controller
     {
         
         $clientes = Cliente::all();
-        return view('clientes.index',compact('clientes')); // Asegúrate de que esta vista exista
+        return view('admin.clientes.index',compact('clientes')); // Asegúrate de que esta vista exista
     }
 
     /**
@@ -62,7 +62,7 @@ class ClienteController extends Controller
     public function show($id)
     {
         $cliente = Cliente::find($id);
-        return view('clientes.show', compact('cliente'));
+        return view('admin.clientes.show', compact('cliente'));
     }
 
     /**

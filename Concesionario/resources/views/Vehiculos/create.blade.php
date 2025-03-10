@@ -53,26 +53,34 @@
             </div>
             @endif
 
-            <form action="{{ route('clientes.index') }}" method="POST">
+            <form action="{{ route('vehiculos.index') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
+                    <label for="nombre" class="form-label">marca</label>
+                    <input type="text" class="form-control" id="nombre" name="marca" value="{{ old('marca') }}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                    <label for="modelo" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" value="{{ old('modelo') }}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" value="{{ old('telefono') }}" maxlength="20" required>
+                    <label for="anio" class="form-label">Año</label>
+                    <input type="text" class="form-control" id="anio" name="anio" value="{{ old('anio') }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input type="number" class="form-control" id="precio" name="precio" value="{{ old('precio') }}"  required>
+                </div>
+                <div class="mb-3">
+                    <label for="stock" class="form-label">Stock</label>
+                    <input type="text" class="form-control" id="stock" name="stock" value="{{ old('stock') }}"  required>
                 </div>
                 <button type="submit" class="btn btn-success">Guardar</button>
-                <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('vehiculos.index') }}" class="btn btn-secondary">Cancelar</a>
             </form>
 
 
-            <a href="{{ route('clientes.index') }}">Ver clientes</a>
+            <a href="{{ route('vehiculos.index') }}">Ver clientes</a>
 
         </section>
     </main>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('email')->unique();
             $table->string('telefono')->unique();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->timestamps();
 
         });
